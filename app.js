@@ -203,15 +203,12 @@ if ("IntersectionObserver" in window) {
       });
     },
     {
-      threshold: 0.18,
+      threshold: 0.05,
+      rootMargin: "0px 0px -5% 0px",
     },
   );
 
-  revealItems.forEach((item) => {
-    revealObserver.observe(item);
-  });
+  revealItems.forEach((item) => revealObserver.observe(item));
 } else {
-  revealItems.forEach((item) => {
-    item.classList.add("active");
-  });
+  revealItems.forEach((item) => item.classList.add("active"));
 }

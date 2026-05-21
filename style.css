@@ -2971,3 +2971,14 @@ p.reveal-text {
     transition: none !important;
   }
 }
+
+/* Safari desktop fallback */
+@supports (-webkit-hyphens: none) {
+  @media (min-width: 768px) {
+    .reveal-text {
+      opacity: 1 !important;
+      transform: none !important;
+      filter: none !important;
+    }
+  }
+}
