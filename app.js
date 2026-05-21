@@ -1,3 +1,4 @@
+document.documentElement.classList.add("js");
 const burger = document.querySelector("#burger");
 const nav = document.querySelector("#nav");
 const navLinks = document.querySelectorAll(".nav a");

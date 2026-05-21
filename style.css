@@ -2941,24 +2941,33 @@ p.reveal-text {
   transition-delay: 0.25s;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .split-line,
-  .reveal,
-  .fade-up,
-  .reveal-text,
-  [data-animate] {
-    opacity: 1 !important;
-    transform: none !important;
-    clip-path: none !important;
-    filter: none !important;
+@media (min-width: 768px) {
+  .reveal-text {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+
+  .js .reveal-text {
+    opacity: 0;
+    transform: translateY(40px);
+    filter: none;
+    transition:
+      opacity 1.2s ease,
+      transform 1.2s ease;
+  }
+
+  .js .reveal-text.active {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-@media (min-width: 768px) {
-  body.loaded .split-line,
-  body.loaded .reveal,
-  body.loaded .reveal-text,
-  body.loaded [data-animate] {
-    opacity: 1;
+@media (prefers-reduced-motion: reduce) {
+  .reveal-text {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
   }
 }
