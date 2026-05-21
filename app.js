@@ -193,19 +193,25 @@ if (statsSection) {
 }
 const revealItems = document.querySelectorAll(".reveal-text");
 
-const revealObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("active");
-      }
-    });
-  },
-  {
-    threshold: 0.18,
-  },
-);
+if ("IntersectionObserver" in window) {
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("active");
+        }
+      });
+    },
+    {
+      threshold: 0.18,
+    },
+  );
 
-revealItems.forEach((item) => {
-  revealObserver.observe(item);
-});
+  revealItems.forEach((item) => {
+    revealObserver.observe(item);
+  });
+} else {
+  revealItems.forEach((item) => {
+    item.classList.add("active");
+  });
+}
