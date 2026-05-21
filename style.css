@@ -2940,3 +2940,22 @@ body::before {
 p.reveal-text {
   transition-delay: 0.25s;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .split-line,
+  .reveal,
+  .fade-up,
+  [data-animate] {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+    filter: none !important;
+  }
+}
+@media (min-width: 768px) {
+  body.loaded .split-line,
+  body.loaded .reveal,
+  body.loaded [data-animate] {
+    opacity: 1;
+  }
+}
