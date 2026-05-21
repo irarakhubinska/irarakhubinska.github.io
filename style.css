@@ -2945,6 +2945,7 @@ p.reveal-text {
   .split-line,
   .reveal,
   .fade-up,
+  .reveal-text,
   [data-animate] {
     opacity: 1 !important;
     transform: none !important;
@@ -2952,9 +2953,11 @@ p.reveal-text {
     filter: none !important;
   }
 }
+
 @media (min-width: 768px) {
   body.loaded .split-line,
   body.loaded .reveal,
+  body.loaded .reveal-text,
   body.loaded [data-animate] {
     opacity: 1;
   }
