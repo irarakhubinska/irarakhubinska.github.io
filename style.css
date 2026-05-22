@@ -2203,7 +2203,7 @@ ul {
 
 .final-cta-content h2 {
   font-family: var(--second-family);
-  font-size: clamp(58px, 9vw, 150px);
+  font-size: clamp(58px, 9vw, 110px);
   line-height: 0.88;
   font-weight: 400;
   color: white;
