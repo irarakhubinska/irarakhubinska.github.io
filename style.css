@@ -734,7 +734,7 @@ ul {
 .about-intro-content h2 {
   font-family: var(--second-family);
 
-  font-size: clamp(55px, 9vw, 150px);
+  font-size: clamp(55px, 9vw, 110px);
   line-height: 0.88;
   font-weight: 400;
 
@@ -1772,7 +1772,7 @@ ul {
 
 .events-head h2 {
   font-family: var(--second-family);
-  font-size: clamp(58px, 8vw, 130px);
+  font-size: clamp(58px, 8vw, 110px);
   line-height: 0.9;
   font-weight: 400;
   color: var(--green);
@@ -2011,7 +2011,7 @@ ul {
 
 .gallery-strip-head h2 {
   font-family: var(--second-family);
-  font-size: clamp(58px, 8vw, 120px);
+  font-size: clamp(58px, 8vw, 110px);
   line-height: 0.9;
   font-weight: 400;
   margin-bottom: 40px;
@@ -2310,7 +2310,7 @@ ul {
 
 .request-content h2 {
   font-family: var(--second-family);
-  font-size: clamp(58px, 8vw, 130px);
+  font-size: clamp(58px, 8vw, 110px);
   line-height: 0.9;
   font-weight: 400;
   color: var(--green);
@@ -2449,7 +2449,7 @@ ul {
 
 .contacts-hero-content h2 {
   font-family: var(--second-family);
-  font-size: clamp(64px, 9vw, 150px);
+  font-size: clamp(64px, 9vw, 110px);
   line-height: 0.88;
   font-weight: 400;
   color: white;
@@ -2844,7 +2844,7 @@ body::before {
 .cacao-path-content h2 {
   font-family: var(--second-family);
 
-  font-size: clamp(72px, 9vw, 140px);
+  font-size: clamp(72px, 9vw, 110px);
   line-height: 0.9;
   font-weight: 400;
 
@@ -3020,7 +3020,7 @@ p.reveal-text {
 
 .reviews-head h2 {
   font-family: var(--second-family);
-  font-size: clamp(58px, 8vw, 120px);
+  font-size: clamp(58px, 8vw, 110px);
   line-height: 0.9;
   font-weight: 400;
   color: var(--green);
