@@ -56,83 +56,83 @@ eventsPrev?.addEventListener("click", () => {
 
 window.addEventListener("resize", updateEventsSlider);
 updateEventsSlider();
+
 const galleryStrip = document.querySelector(".gallery-strip");
 
 if (galleryStrip) {
-  let autoScroll;
-  let isDragging = false;
+  let isDown = false;
+  let startX;
+  let scrollLeft;
+  let animationFrame;
 
-  let startX = 0;
-  let scrollLeft = 0;
+  function autoScroll() {
+    galleryStrip.scrollLeft += 0.5;
 
-  function startAutoScroll() {
-    stopAutoScroll();
+    // smooth infinite loop
+    if (galleryStrip.scrollLeft >= galleryStrip.scrollWidth / 2) {
+      galleryStrip.scrollLeft = 0;
+    }
 
-    autoScroll = setInterval(() => {
-      galleryStrip.scrollLeft += 0.7;
-
-      // LOOP
-      if (galleryStrip.scrollLeft >= galleryStrip.scrollWidth / 2) {
-        galleryStrip.scrollLeft = 0;
-      }
-    }, 16);
+    animationFrame = requestAnimationFrame(autoScroll);
   }
 
-  function stopAutoScroll() {
-    clearInterval(autoScroll);
+  function startAuto() {
+    cancelAnimationFrame(animationFrame);
+    autoScroll();
   }
 
-  // DRAG DESKTOP
+  function stopAuto() {
+    cancelAnimationFrame(animationFrame);
+  }
+
+  // DESKTOP DRAG
   galleryStrip.addEventListener("mousedown", (e) => {
-    isDragging = true;
-
-    galleryStrip.classList.add("dragging");
-
-    startX = e.pageX;
+    isDown = true;
+    startX = e.pageX - galleryStrip.offsetLeft;
     scrollLeft = galleryStrip.scrollLeft;
 
-    stopAutoScroll();
+    stopAuto();
   });
 
-  window.addEventListener("mouseup", () => {
-    isDragging = false;
-
-    galleryStrip.classList.remove("dragging");
-
-    startAutoScroll();
+  galleryStrip.addEventListener("mouseleave", () => {
+    isDown = false;
+    startAuto();
   });
 
-  window.addEventListener("mousemove", (e) => {
-    if (!isDragging) return;
+  galleryStrip.addEventListener("mouseup", () => {
+    isDown = false;
+    startAuto();
+  });
 
-    const walk = (e.pageX - startX) * 1.2;
+  galleryStrip.addEventListener("mousemove", (e) => {
+    if (!isDown) return;
+
+    e.preventDefault();
+
+    const x = e.pageX - galleryStrip.offsetLeft;
+    const walk = (x - startX) * 1.2;
 
     galleryStrip.scrollLeft = scrollLeft - walk;
   });
 
-  // TOUCH MOBILE
-  galleryStrip.addEventListener("touchstart", stopAutoScroll, {
-    passive: true,
-  });
-
-  galleryStrip.addEventListener("touchend", startAutoScroll, {
-    passive: true,
-  });
-
-  // WHEEL DESKTOP
+  // MOBILE TOUCH
   galleryStrip.addEventListener(
-    "wheel",
-    (e) => {
-      if (window.innerWidth <= 980) return;
-
-      e.preventDefault();
-
-      galleryStrip.scrollLeft += e.deltaY;
+    "touchstart",
+    () => {
+      stopAuto();
     },
-    { passive: false },
+    { passive: true },
   );
 
-  startAutoScroll();
+  galleryStrip.addEventListener(
+    "touchend",
+    () => {
+      startAuto();
+    },
+    { passive: true },
+  );
+
+  startAuto();
 }
 const statsSection = document.querySelector(".services-stats");
 
@@ -212,3 +212,54 @@ if ("IntersectionObserver" in window) {
 } else {
   revealItems.forEach((item) => item.classList.add("active"));
 }
+
+const reviewsTrack = document.querySelector("#reviewsTrack");
+const reviewCards = document.querySelectorAll(".review-card");
+const reviewsPrev = document.querySelector(".reviews-prev");
+const reviewsNext = document.querySelector(".reviews-next");
+
+let reviewIndex = 0;
+
+function getReviewsPerView() {
+  return window.innerWidth <= 980 ? 1 : 4;
+}
+
+function updateReviewsSlider() {
+  if (!reviewsTrack || !reviewCards.length) return;
+
+  const perView = getReviewsPerView();
+
+  const maxIndex = Math.max(reviewCards.length - perView, 0);
+
+  reviewIndex = Math.min(reviewIndex, maxIndex);
+
+  const gap = window.innerWidth <= 980 ? 18 : 24;
+
+  const cardWidth = reviewCards[0].getBoundingClientRect().width;
+
+  reviewsTrack.style.transform = `translateX(-${reviewIndex * (cardWidth + gap)}px)`;
+}
+
+reviewsNext?.addEventListener("click", () => {
+  const perView = getReviewsPerView();
+
+  const maxIndex = Math.max(reviewCards.length - perView, 0);
+
+  reviewIndex = reviewIndex >= maxIndex ? 0 : reviewIndex + 1;
+
+  updateReviewsSlider();
+});
+
+reviewsPrev?.addEventListener("click", () => {
+  const perView = getReviewsPerView();
+
+  const maxIndex = Math.max(reviewCards.length - perView, 0);
+
+  reviewIndex = reviewIndex <= 0 ? maxIndex : reviewIndex - 1;
+
+  updateReviewsSlider();
+});
+
+window.addEventListener("resize", updateReviewsSlider);
+
+updateReviewsSlider();
