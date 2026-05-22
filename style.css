@@ -1643,7 +1643,7 @@ ul {
 
   font-family: var(--second-family);
 
-  font-size: clamp(62px, 8vw, 140px);
+  font-size: clamp(62px, 8vw, 110px);
   line-height: 0.9;
   font-weight: 400;
 
