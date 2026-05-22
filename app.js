@@ -58,81 +58,52 @@ window.addEventListener("resize", updateEventsSlider);
 updateEventsSlider();
 
 const galleryStrip = document.querySelector(".gallery-strip");
+const galleryTrack = document.querySelector(".gallery-strip-track");
 
-if (galleryStrip) {
-  let isDown = false;
-  let startX;
-  let scrollLeft;
-  let animationFrame;
+if (galleryStrip && galleryTrack) {
+  let galleryX = 0;
+  let speed = 0.45;
+  let rafId;
+  let isPaused = false;
 
-  function autoScroll() {
-    galleryStrip.scrollLeft += 0.5;
+  function getLoopWidth() {
+    return galleryTrack.scrollWidth / 2;
+  }
 
-    // smooth infinite loop
-    if (galleryStrip.scrollLeft >= galleryStrip.scrollWidth / 2) {
-      galleryStrip.scrollLeft = 0;
+  function animateGallery() {
+    if (!isPaused) {
+      galleryX -= speed;
+
+      if (Math.abs(galleryX) >= getLoopWidth()) {
+        galleryX = 0;
+      }
+
+      galleryTrack.style.transform = `translate3d(${galleryX}px, 0, 0)`;
     }
 
-    animationFrame = requestAnimationFrame(autoScroll);
+    rafId = requestAnimationFrame(animateGallery);
   }
 
-  function startAuto() {
-    cancelAnimationFrame(animationFrame);
-    autoScroll();
+  function pauseGallery() {
+    isPaused = true;
   }
 
-  function stopAuto() {
-    cancelAnimationFrame(animationFrame);
+  function playGallery() {
+    isPaused = false;
   }
 
-  // DESKTOP DRAG
-  galleryStrip.addEventListener("mousedown", (e) => {
-    isDown = true;
-    startX = e.pageX - galleryStrip.offsetLeft;
-    scrollLeft = galleryStrip.scrollLeft;
+  galleryStrip.addEventListener("touchstart", pauseGallery, { passive: true });
+  galleryStrip.addEventListener("touchend", playGallery, { passive: true });
+  galleryStrip.addEventListener("mouseenter", pauseGallery);
+  galleryStrip.addEventListener("mouseleave", playGallery);
 
-    stopAuto();
+  window.addEventListener("resize", () => {
+    galleryX = 0;
+    galleryTrack.style.transform = "translate3d(0, 0, 0)";
   });
 
-  galleryStrip.addEventListener("mouseleave", () => {
-    isDown = false;
-    startAuto();
-  });
-
-  galleryStrip.addEventListener("mouseup", () => {
-    isDown = false;
-    startAuto();
-  });
-
-  galleryStrip.addEventListener("mousemove", (e) => {
-    if (!isDown) return;
-
-    e.preventDefault();
-
-    const x = e.pageX - galleryStrip.offsetLeft;
-    const walk = (x - startX) * 1.2;
-
-    galleryStrip.scrollLeft = scrollLeft - walk;
-  });
-
-  // MOBILE TOUCH
-  galleryStrip.addEventListener(
-    "touchstart",
-    () => {
-      stopAuto();
-    },
-    { passive: true },
-  );
-
-  galleryStrip.addEventListener(
-    "touchend",
-    () => {
-      startAuto();
-    },
-    { passive: true },
-  );
-
-  startAuto();
+  cancelAnimationFrame(rafId);
+  animateGallery();
 }
 const statsSection = document.querySelector(".services-stats");
 
