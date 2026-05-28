@@ -85,6 +85,7 @@ ul {
   background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(18px);
   border-bottom: 1px solid rgba(200, 169, 107, 0.18);
+  z-index: 1000000;
 }
 
 .header-container {
