@@ -273,3 +273,45 @@ coursesPrev?.addEventListener("click", () => {
 
 window.addEventListener("resize", updateCoursesSlider);
 updateCoursesSlider();
+
+const TOKEN = "8930677047:AAFXBiHZ0DDUuUw-yF0ZTVSVpKSy2LtWOXE";
+
+const CHAT_ID = "373992474";
+
+const URI_API = `https://api.telegram.org/bot${TOKEN}/sendMessage`;
+
+const requestForm = document.querySelector("#requestForm");
+
+requestForm?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const name = requestForm.name.value;
+  const phone = requestForm.phone.value;
+  const telegram = requestForm.telegram.value;
+  const message = requestForm.message.value;
+
+  const text = `
+🕊 Нова заявка з сайту
+
+👤 Ім’я: ${name}
+📞 Телефон: ${phone}
+📲 Telegram / Instagram: ${telegram}
+
+✨ Запит:
+${message}
+`;
+
+  await fetch(URI_API, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      chat_id: CHAT_ID,
+      text: text,
+    }),
+  });
+
+  alert("Заявку відправлено ✨");
+  requestForm.reset();
+});

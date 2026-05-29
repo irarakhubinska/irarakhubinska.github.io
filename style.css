@@ -3468,6 +3468,10 @@ p.reveal-text {
   color: rgba(255, 255, 255, 0.78);
 }
 
+.course-card .gold {
+  color: var(--gold);
+}
+
 .course-card a {
   margin-top: auto;
   min-height: 58px;
