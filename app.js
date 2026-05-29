@@ -136,7 +136,7 @@ if (statsSection) {
           if (target === 100) {
             counter.innerText = "100+";
           } else if (target === 2) {
-            counter.innerText = "> 2";
+            counter.innerText = ">2";
           } else {
             counter.innerText = `${target}+`;
           }
@@ -234,3 +234,42 @@ reviewsPrev?.addEventListener("click", () => {
 window.addEventListener("resize", updateReviewsSlider);
 
 updateReviewsSlider();
+
+const coursesTrack = document.querySelector("#coursesTrack");
+const courseCards = document.querySelectorAll(".course-card");
+const coursesPrev = document.querySelector(".courses-prev");
+const coursesNext = document.querySelector(".courses-next");
+
+let courseIndex = 0;
+
+function updateCoursesSlider() {
+  if (!coursesTrack || !courseCards.length) return;
+
+  if (window.innerWidth > 980) {
+    coursesTrack.style.transform = "translateX(0)";
+    return;
+  }
+
+  const maxIndex = Math.max(courseCards.length - 1, 0);
+  courseIndex = Math.min(courseIndex, maxIndex);
+
+  const gap = 18;
+  const cardWidth = courseCards[0].getBoundingClientRect().width;
+
+  coursesTrack.style.transform = `translateX(-${courseIndex * (cardWidth + gap)}px)`;
+}
+
+coursesNext?.addEventListener("click", () => {
+  const maxIndex = Math.max(courseCards.length - 1, 0);
+  courseIndex = courseIndex >= maxIndex ? 0 : courseIndex + 1;
+  updateCoursesSlider();
+});
+
+coursesPrev?.addEventListener("click", () => {
+  const maxIndex = Math.max(courseCards.length - 1, 0);
+  courseIndex = courseIndex <= 0 ? maxIndex : courseIndex - 1;
+  updateCoursesSlider();
+});
+
+window.addEventListener("resize", updateCoursesSlider);
+updateCoursesSlider();
