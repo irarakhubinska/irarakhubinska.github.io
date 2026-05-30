@@ -1862,7 +1862,7 @@ ul {
   margin-top: auto;
   margin-bottom: 24px;
   font-family: var(--second-family);
-  font-size: 35px;
+  font-size: 25px;
   line-height: 1;
   font-weight: 400;
   color: var(--green);
@@ -1928,7 +1928,7 @@ ul {
   }
 
   .event-card h3 {
-    font-size: 28px;
+    font-size: 23px;
     margin-bottom: 15px;
   }
 
